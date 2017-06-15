@@ -1,0 +1,25 @@
+
+    def test_user_privilege(self):
+        login.login(self,"user2","password",self.hostIP,"https")
+        #login.login(self,"adduser","password",self.hostIP,"http")
+        result = user.navToConfigUsers(self)
+        self.assertEqual(result,"User")
+        result = user.navToConfigNM(self)
+        self.assertEqual(result,"User")
+        login.logout(self)
+
+    def test_operator_privilege(self):
+        login.login(self,"adduser","password",self.hostIP,"http")
+        #login.login(self,"user2","password",self.hostIP,"http")
+        #login.login(self,"root","superuser",self.hostIP,"http")
+        self.assertEqual(user.delPrilegeCheck(self),"No privilege")
+        result = user.navToConfigNM(self)
+        self.assertEqual(result,"User")
+        login.logout(self)
+
+    def test_del_user(self):
+        login.login(self,self.susername,self.suserPassword,self.hostIP,"https")
+        user.delUserByName(self,"adduser")
+        user.delUserByName(self,"user2")
+        login.logout(self)
+        #user.delUser(self,"user2")'''
